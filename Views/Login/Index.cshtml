@@ -7,7 +7,7 @@
 <h1 class="text-center">Login</h1>
 @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
 {
-    <div class="alert alert-danger">@ViewBag.ErrorMessage</div>
+    <div class="alert alert-danger text-center w-50 my-4 m-auto">@ViewBag.ErrorMessage</div>
 }
 
 
@@ -27,7 +27,4 @@
 
         <button type="submit" class="btn btn-success mt-4">Login</button>
     </div>
-}
-@section scripts {
-    @Scripts.Render("~/bundles/jqueryval")
 }

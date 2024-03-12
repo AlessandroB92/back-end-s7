@@ -26,22 +26,25 @@ namespace back_end_s7.Controllers
             if (ModelState.IsValid)
             {
                 var user = dbContext.Utenti.FirstOrDefault(u => u.Username == model.Username && u.Password == model.Password);
+                var admin = dbContext.Amministratori.FirstOrDefault(a => a.Username == model.Username && a.Password == model.Password);
                 if (user != null)
                 {
                     FormsAuthentication.SetAuthCookie(user.ID.ToString(), true);
                     return RedirectToAction("Index", "Home");
                 }
-
-                var admin = dbContext.Amministratori.FirstOrDefault(a => a.Username == model.Username && a.Password == model.Password);
                 if (admin != null)
                 {
                     FormsAuthentication.SetAuthCookie(admin.ID.ToString(), true);
                     return RedirectToAction("Index", "Home");
                 }
+                else
+                {
+                    TempData["ErrorMessage"] = "Credenziali Errate.";
+                    return RedirectToAction("Index", "Login");
+                }
 
                 // Se né utente né amministratore sono stati trovati, mostra il messaggio di errore
-            } 
-            TempData["ErrorMessage"] = "Credenziali Errate.";
+            }
             return View(model);
         }
 
