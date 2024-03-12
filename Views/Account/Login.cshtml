@@ -1,4 +1,4 @@
-﻿@model back_end_s7.Models.Utenti
+﻿@model back_end_s7.Models.LoginUtenti
 
 @{
     ViewBag.Title = "Accesso";
@@ -21,5 +21,5 @@
     </div>
 
     <button type="submit" class="btn btn-primary mt-4">Accedi</button>
-    @Html.HiddenFor(model => model.Ruolo, new { Value = "Admin" })
+    @Html.HiddenFor(model => model.Ruolo, new { Value = "User" })
 }

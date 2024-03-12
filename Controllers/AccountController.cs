@@ -1,5 +1,4 @@
 ﻿using back_end_s7.Models;
-using back_end_s7.Models.back_end_s7.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +33,11 @@ namespace back_end_s7.Controllers
 
         public ActionResult Login()
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Logout", "Account");
+            }
+
             return View(new LoginUtenti());
         }
 
@@ -55,6 +59,13 @@ namespace back_end_s7.Controllers
             }
 
             return View(loginModel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

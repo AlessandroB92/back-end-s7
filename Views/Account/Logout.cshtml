@@ -6,7 +6,7 @@
 
 <p>Sei sicuro di voler eseguire il logout?</p>
 
-@using (Html.BeginForm("PerformLogout", "Account"))
+@using (Html.BeginForm("Logout", "Account"))
 {
     @Html.AntiForgeryToken()
     <button type="submit" class="btn btn-primary">Logout</button>
