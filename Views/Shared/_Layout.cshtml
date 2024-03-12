@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    <li>@Html.ActionLink("Registrati", "Register", "Account", new { area = "" }, new { @class = "nav-link" })</li>
+                    
                 </ul>
                 @if (authCookie != null)
                 {
@@ -41,6 +41,12 @@
                 @if (authCookie == null)
                 {
                     <ul class="navbar-nav">
+                        <li>
+                            <form action="@Url.Action("Register", "Account")" method="post">
+                                @Html.AntiForgeryToken();
+                                <button type="submit" class="btn btn-outline-primary">Register</button>
+                            </form>
+                        </li>
                         <li>
                             <form action="@Url.Action("Index", "Login")" method="post">
                                 @Html.AntiForgeryToken();
