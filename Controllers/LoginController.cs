@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using System.Web.Security;
 using back_end_s7.Models;
@@ -14,7 +13,7 @@ namespace back_end_s7.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                return RedirectToAction("Logged");
+                return RedirectToAction("Index", "Home");
             }
             ViewBag.ErrorMessage = TempData["ErrorMessage"];
             return View();
@@ -22,49 +21,38 @@ namespace back_end_s7.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Index(Amministratori admin)
+        public ActionResult Index(LoginModel model)
         {
             if (ModelState.IsValid)
             {
-                try
+                var user = dbContext.Utenti.FirstOrDefault(u => u.Username == model.Username && u.Password == model.Password);
+                if (user != null)
                 {
-                    var authenticatedAdmin = dbContext.Amministratori
-                        .FirstOrDefault(a => a.Username == admin.Username && a.Password == admin.Password && a.Ruolo == "Admin");
+                    FormsAuthentication.SetAuthCookie(user.ID.ToString(), true);
+                    return RedirectToAction("Index", "Home");
+                }
 
-                    if (authenticatedAdmin != null)
-                    {
-                        FormsAuthentication.SetAuthCookie(authenticatedAdmin.ID.ToString(), true);
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        TempData["ErrorMessage"] = "Credenziali errate. Riprova.";
-                        return RedirectToAction("Index");
-                    }
-                }
-                catch (Exception)
+                var admin = dbContext.Amministratori.FirstOrDefault(a => a.Username == model.Username && a.Password == model.Password);
+                if (admin != null)
                 {
-                    ModelState.AddModelError("", "Si è verificato un errore durante il login.");
-                    return View(admin);
+                    FormsAuthentication.SetAuthCookie(admin.ID.ToString(), true);
+                    return RedirectToAction("Index", "Home");
                 }
-            }
-            return View(admin);
+
+                // Se né utente né amministratore sono stati trovati, mostra il messaggio di errore
+            } 
+            TempData["ErrorMessage"] = "Credenziali Errate.";
+            return View(model);
         }
 
-        [Authorize]
-        public ActionResult Logged()
-        {
-            var adminID = HttpContext.User.Identity.Name;
-            ViewBag.AdminID = adminID;
-            return View();
-        }
 
-        [Authorize, HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Login");
+            TempData["Message"] = "Logout effettuato con successo.";
+            return RedirectToAction("Index", "Home");
         }
     }
 }

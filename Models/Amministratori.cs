@@ -12,11 +12,11 @@ namespace back_end_s7.Models
         [Key]
         public int ID { get; set; }
 
-        [Required]
+        [Required (ErrorMessage = "Inserisci l'Username")]
         [StringLength(50)]
         public string Username { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Inserisci la Password")]
         [StringLength(255)]
         public string Password { get; set; }
 

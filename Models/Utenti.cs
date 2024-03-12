@@ -9,7 +9,6 @@ namespace back_end_s7.Models
     [Table("Utenti")]
     public partial class Utenti
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Utenti()
         {
             Ordini = new HashSet<Ordini>();
@@ -17,11 +16,11 @@ namespace back_end_s7.Models
 
         public int ID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Inserisci l'Username")]
         [StringLength(50)]
         public string Username { get; set; }
 
-        [Required]
+        [Required (ErrorMessage = "Inserisci la Password")]
         [StringLength(255)]
         public string Password { get; set; }
 
@@ -37,7 +36,6 @@ namespace back_end_s7.Models
         [StringLength(50)]
         public string Ruolo { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Ordini> Ordini { get; set; }
     }
 }

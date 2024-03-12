@@ -30,42 +30,5 @@ namespace back_end_s7.Controllers
 
             return View(utente);
         }
-
-        public ActionResult Login()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                return RedirectToAction("Logout", "Account");
-            }
-
-            return View(new LoginUtenti());
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginUtenti loginModel)
-        {
-            if (ModelState.IsValid)
-            {
-                var utente = dbContext.Utenti.FirstOrDefault(u => u.Username == loginModel.Username && u.Password == loginModel.Password);
-                if (utente != null)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Nome utente o password non validi.");
-                }
-            }
-
-            return View(loginModel);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Logout()
-        {
-            FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
-        }
     }
 }

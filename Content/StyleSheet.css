@@ -1,0 +1,8 @@
+﻿body {
+}
+
+#sfondo {
+    background-image: url("https://www.today.it/~media/horizontal-hi/56919187605090/la-pizza-napoletana-cotta-al-forno-a-legna-fabrizio-pullara.jpg");
+    height: 80vh;
+    object-fit: cover;
+}

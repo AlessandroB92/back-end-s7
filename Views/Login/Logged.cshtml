@@ -1,13 +1,13 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Logged";
+    string username = User.Identity.Name;
 }
-
-<h2 class="text-danger">Effettua il Logout</h2>
-
 
 @using (Html.BeginForm("Logout", "Login"))
 {
-    @Html.AntiForgeryToken();
-    <button class="btn btn-danger">Logout</button>
+    <div class="container d-flex flex-column justify-content-center w-50">
+        <h2 class="text-danger text-center mb-5">Effettua il Logout</h2>
+        @Html.AntiForgeryToken()
+        <button class="btn btn-danger m-auto" style="width: 20%;">Logout</button>
+    </div>
 }
