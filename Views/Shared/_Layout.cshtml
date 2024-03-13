@@ -28,6 +28,12 @@
                 {
                     <ul class="navbar-nav">
                         <li>
+                            <form action="@Url.Action("Index", "Articoli")" method="post">
+                                @Html.AntiForgeryToken();
+                                <button type="submit" class="btn btn-outline-warning text-white">Articoli</button>
+                            </form>
+                        </li>
+                        <li>
                             <form action="@Url.Action("Logout", "Login")" method="post">
                                 @Html.AntiForgeryToken();
                                 <button type="submit" class="btn btn-outline-danger text-white">Logout</button>
