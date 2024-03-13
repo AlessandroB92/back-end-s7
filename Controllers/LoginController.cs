@@ -7,7 +7,7 @@ namespace back_end_s7.Controllers
 {
     public class LoginController : Controller
     {
-        private FornoDbContext dbContext = new FornoDbContext();
+        private readonly FornoDbContext dbContext = new FornoDbContext();
 
         public ActionResult Index()
         {

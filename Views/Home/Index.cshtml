@@ -1,23 +1,22 @@
 ﻿<main>
     @if (TempData["Message"] != null)
     {
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-danger text-center" role="alert">
             @TempData["Message"]
         </div>
     }
-    @if (User.IsInRole("Admin"))
-    {
-        <h1>Benvenuto Admin</h1>
-    }
-    @if (User.IsInRole("User"))
-    {
-        <h1>Benvenuto Utente</h1>
-    }
+
     <div id="sfondo" class="d-flex justify-content-center align-items-center rounded-4">
         <div class="bg bg-black bg-opacity-75 p-5 rounded-5">
-            <h1 class="text-white text-center">Il Forno Ristoria Pizzorante!</h1>
+            <h1 class="text-white text-center">In Forno Ristoria Pizzorante!</h1>
             <h3 class="text-white text-center">Se non ci vieni sei ignorante...</h3>
         </div>
     </div>
-
 </main>
+<style>
+    #sfondo {
+        background-image: url("https://www.today.it/~media/horizontal-hi/56919187605090/la-pizza-napoletana-cotta-al-forno-a-legna-fabrizio-pullara.jpg");
+        height: 80vh;
+        background-size: cover;
+    }
+</style>
