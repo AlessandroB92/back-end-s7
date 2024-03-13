@@ -13,6 +13,16 @@ namespace back_end_s7.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                var isAdmin = dbContext.Amministratori.Any(a => a.Username == User.Identity.Name);
+                if (isAdmin)
+                {
+                    Roles.AddUserToRole(User.Identity.Name, "Admin");
+                }
+                else
+                {
+                    Roles.AddUserToRole(User.Identity.Name, "User");
+                }
+
                 return RedirectToAction("Index", "Home");
             }
             ViewBag.ErrorMessage = TempData["ErrorMessage"];
@@ -29,12 +39,12 @@ namespace back_end_s7.Controllers
                 var admin = dbContext.Amministratori.FirstOrDefault(a => a.Username == model.Username && a.Password == model.Password);
                 if (user != null)
                 {
-                    FormsAuthentication.SetAuthCookie(user.ID.ToString(), true);
+                    FormsAuthentication.SetAuthCookie(user.Username, true);
                     return RedirectToAction("Index", "Home");
                 }
                 if (admin != null)
                 {
-                    FormsAuthentication.SetAuthCookie(admin.ID.ToString(), true);
+                    FormsAuthentication.SetAuthCookie(admin.Username, true);
                     return RedirectToAction("Index", "Home");
                 }
                 else
@@ -42,12 +52,9 @@ namespace back_end_s7.Controllers
                     TempData["ErrorMessage"] = "Credenziali Errate.";
                     return RedirectToAction("Index", "Login");
                 }
-
-                // Se né utente né amministratore sono stati trovati, mostra il messaggio di errore
             }
             return View(model);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]

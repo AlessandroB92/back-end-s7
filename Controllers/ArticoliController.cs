@@ -16,7 +16,7 @@ namespace back_end_s7.Controllers
             var articoli = dbContext.Articoli.ToList();
             return View(articoli);
         }
-
+        [Authorize(Roles ="Admin")]
         public ActionResult Create()
         {
             return View();
@@ -24,6 +24,7 @@ namespace back_end_s7.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create(Articoli articolo)
         {
             if (ModelState.IsValid)
@@ -44,6 +45,7 @@ namespace back_end_s7.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(Articoli articolo)
         {
             if (ModelState.IsValid)
@@ -64,6 +66,7 @@ namespace back_end_s7.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteConfirmed(int id)
         {
             var articolo = dbContext.Articoli.Find(id);

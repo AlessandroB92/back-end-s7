@@ -281,6 +281,7 @@
     <Compile Include="Models\DettagliOrdine.cs" />
     <Compile Include="Models\FornoDbContext.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\ManagerRuoli.cs" />
     <Compile Include="Models\Ordini.cs" />
     <Compile Include="Models\OrdiniArticoli.cs" />
     <Compile Include="Models\Utenti.cs" />

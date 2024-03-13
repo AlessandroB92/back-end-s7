@@ -4,18 +4,23 @@
     ViewBag.Title = "Articoli";
 }
 
-@*@{
-    var isAdmin = User.IsInRole("Admin");
-}*@
+@using System.Web.Security
+@{
+    var authCookie = Request.Cookies[FormsAuthentication.FormsCookieName];
+    var roles = Roles.GetRolesForUser();
+}
 
 
 <h2>Articoli</h2>
-@*@if (isAdmin == true)
-{*@
-    <p>
-        @Html.ActionLink("Aggiungi nuovo articolo", "Create")
-    </p>
-@*}*@
+@if (authCookie != null)
+{
+    if (roles.Contains("Admin"))
+    {
+        <p>
+            @Html.ActionLink("Aggiungi nuovo articolo", "Create")
+        </p>
+    }
+}
 
 <table class="table">
     <tr>
@@ -43,13 +48,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Descrizione)
             </td>
-            @*@if (isAdmin == true)
-            {*@
-            <td>
-                @Html.ActionLink("Modifica", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Elimina", "Delete", new { id = item.ID })
-            </td>
-            @*}*@
-        </tr>
+            @if (authCookie != null)
+            {
+                if (roles.Contains("Admin"))
+                {
+                    <td>
+                        @Html.ActionLink("Modifica", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("Elimina", "Delete", new { id = item.ID })
+                    </td>
+                }
+             }
+            </tr>
     }
 </table>
