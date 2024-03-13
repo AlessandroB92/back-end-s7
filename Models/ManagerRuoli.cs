@@ -8,7 +8,7 @@ namespace back_end_s7.Models
 {
     public class ManagerRuoli : RoleProvider
     {
-        FornoDbContext db = new FornoDbContext();
+        readonly FornoDbContext db = new FornoDbContext();
         public override string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)

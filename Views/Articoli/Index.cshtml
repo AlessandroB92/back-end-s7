@@ -10,54 +10,37 @@
     var roles = Roles.GetRolesForUser();
 }
 
-
-<h2>Articoli</h2>
+<h1 class="mb-5 text-center fw-bold">Articoli</h1>
 @if (authCookie != null)
 {
     if (roles.Contains("Admin"))
     {
-        <p>
-            @Html.ActionLink("Aggiungi nuovo articolo", "Create")
-        </p>
+        <div class="m-auto w-50 text-center">
+            @Html.ActionLink("Aggiungi nuovo articolo", "Create", null, new { @class = "btn btn-primary mb-3" })
+        </div>
     }
 }
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Prezzo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Descrizione)
-        </th>
-        <th></th>
-    </tr>
-
+<div class="row">
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prezzo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Descrizione)
-            </td>
-            @if (authCookie != null)
-            {
-                if (roles.Contains("Admin"))
+        <div class="col-3 my-2">
+            <div class="card h-100 shadow bg-body-secondary rounded">
+                <img src="@item.Immagine" class="card-img-top img-fluid" alt="Immagine Articolo" style="height: 200px; object-fit: cover;">
+                <div class="card-body">
+                    <h5 class="card-title">@item.Nome</h5>
+                    <p class="card-text">@item.Descrizione</p>
+                    <p class="card-text fw-bold">Prezzo: @item.Prezzo</p>
+                </div>
+                @if (authCookie != null && roles.Contains("Admin"))
                 {
-                    <td>
-                        @Html.ActionLink("Modifica", "Edit", new { id = item.ID }) |
-                        @Html.ActionLink("Elimina", "Delete", new { id = item.ID })
-                    </td>
+                    <div class="card-footer">
+                        @Html.ActionLink("Modifica", "Edit", new { id = item.ID }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Elimina", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
+                    </div>
                 }
-             }
-            </tr>
+            </div>
+        </div>
+
     }
-</table>
+</div>
