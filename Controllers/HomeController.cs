@@ -1,8 +1,7 @@
-﻿using back_end_s7.Models;
-using System;
-using System.Data.Entity.Validation;
+﻿using System;
 using System.Linq;
 using System.Web.Mvc;
+using back_end_s7.Models;
 
 namespace back_end_s7.Controllers
 {
@@ -15,63 +14,76 @@ namespace back_end_s7.Controllers
             ViewBag.Title = "Home Page";
             return View();
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AggiungiAlCarrello(int idArticolo, int quantita)
         {
-            // Controlla se l'utente è autenticato
-            if (User.Identity.IsAuthenticated)
+            string username = User.Identity.Name;
+            Utenti utente = dbContext.Utenti.FirstOrDefault(u => u.Username == username);
+            if (utente != null)
             {
-                // Ottieni l'ID utente corrente
-                string username = User.Identity.Name;
-                var utente = dbContext.Utenti.FirstOrDefault(u => u.Username == username);
-                if (utente != null)
+                // Cerca l'ordine dell'utente in corso o creane uno nuovo se non esiste
+                Ordini ordine = dbContext.Ordini.FirstOrDefault(o => o.IDUtente == utente.ID && o.Stato == "In corso");
+                if (ordine == null)
                 {
-                    // Cerca l'articolo nel database
-                    var articolo = dbContext.Articoli.FirstOrDefault(a => a.ID == idArticolo);
-                    if (articolo != null)
+                    ordine = new Ordini
                     {
-                        // Calcola il totale
-                        decimal totale = articolo.Prezzo * quantita;
+                        IDUtente = utente.ID,
+                        DataOrdine = DateTime.Now,
+                        Stato = "In Carrello",
+                        Indirizzo = "Indirizzo di default", // Puoi sostituire con l'indirizzo dell'utente
+                        Totale = 0 // Inizialmente impostato a 0, verrà calcolato più avanti
+                    };
+                    dbContext.Ordini.Add(ordine);
+                    dbContext.SaveChanges();
+                }
 
-                        // Crea un nuovo ordine
-                        var nuovoOrdine = new Ordini
-                        {
-                            IDUtente = utente.ID,
-                            DataOrdine = DateTime.Now,
-                            Stato = "In carrello",
-                            Indirizzo = "Indirizzo di spedizione", // Imposta l'indirizzo di spedizione come necessario
-                            Totale = totale // Imposta il totale calcolato
-                        };
+                // Aggiungi il dettaglio dell'ordine per l'articolo aggiunto al carrello
+                Articoli articolo = dbContext.Articoli.FirstOrDefault(a => a.ID == idArticolo);
+                if (articolo != null)
+                {
+                    decimal prezzoTotale = quantita * articolo.Prezzo;
+                    OrdiniArticoli dettaglio = new OrdiniArticoli
+                    {
+                        IDOrdine = ordine.ID,
+                        IDArticolo = articolo.ID,
+                        Quantita = quantita
+                    };
+                    dbContext.OrdiniArticoli.Add(dettaglio);
+                    dbContext.SaveChanges();
 
-                        // Aggiungi l'ordine al database
-                        dbContext.Ordini.Add(nuovoOrdine);
-                        dbContext.SaveChanges();
+                    // Aggiorna il totale dell'ordine
+                    ordine.Totale += prezzoTotale;
+                    dbContext.SaveChanges();
 
-                        // Ora puoi creare il record OrdiniArticoli
-                        var nuovoOrdineArticolo = new OrdiniArticoli
-                        {
-                            IDOrdine = nuovoOrdine.ID,
-                            IDArticolo = articolo.ID,
-                            Quantita = quantita
-                        };
-
-                        // Aggiungi il record OrdiniArticoli al database
-                        dbContext.OrdiniArticoli.Add(nuovoOrdineArticolo);
-                        dbContext.SaveChanges();
-
-                        // Reindirizza l'utente alla pagina degli articoli con un messaggio di successo
-                        TempData["Message"] = "Articolo aggiunto al carrello con successo.";
-                        return RedirectToAction("Index", "Articoli");
-                    }
+                    TempData["Message"] = "Articolo aggiunto al carrello con successo.";
+                    return RedirectToAction("Index", "Articoli");
                 }
             }
 
-            // Se l'utente non è autenticato o ci sono problemi con l'utente o l'articolo, reindirizza all'accesso
             TempData["ErrorMessage"] = "Per aggiungere articoli al carrello, devi essere autenticato.";
             return RedirectToAction("Index", "Login");
         }
 
+        public ActionResult RiepilogoOrdine()
+        {
+            string username = User.Identity.Name;
+            Utenti utente = dbContext.Utenti.FirstOrDefault(u => u.Username == username);
+            if (utente != null)
+            {
+                Ordini ordine = dbContext.Ordini.FirstOrDefault(o => o.IDUtente == utente.ID && o.Stato == "In corso");
+                if (ordine != null)
+                {
+                    var dettagliOrdine = dbContext.OrdiniArticoli.Include("Articoli").Where(d => d.IDOrdine == ordine.ID).ToList();
+                    ViewBag.Ordine = ordine;
+                    ViewBag.DettagliOrdine = dettagliOrdine;
+                    return View();
+                }
+            }
+
+            return RedirectToAction("Index", "Articoli");
+        }
 
     }
 }

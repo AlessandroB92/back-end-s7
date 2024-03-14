@@ -1,0 +1,44 @@
+﻿@model IEnumerable<back_end_s7.Models.OrdiniArticoli>
+
+@{
+    ViewBag.Title = "Riepilogo Ordine";
+}
+
+<h2>Riepilogo Ordine</h2>
+
+@if (ViewBag.Ordine != null)
+{
+    <h3>Dettagli Ordine</h3>
+    <p><strong>ID Ordine:</strong> @ViewBag.Ordine.ID</p>
+    <p><strong>Data Ordine:</strong> @ViewBag.Ordine.DataOrdine</p>
+    <p><strong>Stato:</strong> @ViewBag.Ordine.Stato</p>
+    <p><strong>Totale:</strong> @ViewBag.Ordine.Totale</p>
+    <p><strong>Note:</strong> @ViewBag.Ordine.Note</p>
+    <p><strong>Indirizzo di consegna:</strong> @ViewBag.Ordine.Indirizzo</p>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Articolo</th>
+                <th>Quantità</th>
+                <th>Prezzo Unitario</th>
+                <th>Prezzo Totale</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var dettaglio in ViewBag.DettagliOrdine)
+            {
+                <tr>
+                    <td>@dettaglio.Articoli.Nome</td>
+                    <td>@dettaglio.Quantita</td>
+                    <td>@dettaglio.Articoli.Prezzo</td>
+                    <td>@(dettaglio.Articoli.Prezzo * dettaglio.Quantita)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nessun ordine trovato.</p>
+}

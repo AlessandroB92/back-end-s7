@@ -11,6 +11,12 @@
 }
 
 <h1 class="mb-5 text-center fw-bold">Articoli</h1>
+@if (TempData["Messaggio"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Messaggio"]
+    </div>
+}
 @if (authCookie != null)
 {
     if (roles.Contains("Admin"))

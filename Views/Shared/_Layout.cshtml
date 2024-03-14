@@ -23,7 +23,12 @@
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link fw-bold" })</li>
-                    <li>@Html.ActionLink("Il mio ordine", "Dettagli", "Ordine", new { area = "" }, new { @class = "nav-link fw-bold" })</li>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("RiepilogoOrdine", "Home")">Riepilogo Ordine</a>
+                        </li>
+                    }
                 </ul>
                 @if (authCookie != null)
                 {

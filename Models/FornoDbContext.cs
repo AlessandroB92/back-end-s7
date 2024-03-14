@@ -14,7 +14,6 @@ namespace back_end_s7.Models
 
         public virtual DbSet<Amministratori> Amministratori { get; set; }
         public virtual DbSet<Articoli> Articoli { get; set; }
-        public virtual DbSet<DettagliOrdine> DettagliOrdine { get; set; }
         public virtual DbSet<Ordini> Ordini { get; set; }
         public virtual DbSet<OrdiniArticoli> OrdiniArticoli { get; set; }
         public virtual DbSet<Utenti> Utenti { get; set; }
@@ -33,11 +32,6 @@ namespace back_end_s7.Models
             modelBuilder.Entity<Ordini>()
                 .Property(e => e.Totale)
                 .HasPrecision(10, 2);
-
-            modelBuilder.Entity<Ordini>()
-                .HasMany(e => e.DettagliOrdine)
-                .WithOptional(e => e.Ordini)
-                .HasForeignKey(e => e.IDOrdine);
 
             modelBuilder.Entity<Ordini>()
                 .HasMany(e => e.OrdiniArticoli)

@@ -278,7 +278,6 @@
     </Compile>
     <Compile Include="Models\Amministratori.cs" />
     <Compile Include="Models\Articoli.cs" />
-    <Compile Include="Models\DettagliOrdine.cs" />
     <Compile Include="Models\FornoDbContext.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ManagerRuoli.cs" />
@@ -358,6 +357,7 @@
     <Content Include="Views\Articoli\Create.cshtml" />
     <Content Include="Views\Articoli\Edit.cshtml" />
     <Content Include="Views\Articoli\Delete.cshtml" />
+    <Content Include="Views\Home\RiepilogoOrdine.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

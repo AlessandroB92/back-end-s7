@@ -12,7 +12,6 @@ namespace back_end_s7.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Ordini()
         {
-            DettagliOrdine = new HashSet<DettagliOrdine>();
             OrdiniArticoli = new HashSet<OrdiniArticoli>();
         }
 
@@ -34,9 +33,6 @@ namespace back_end_s7.Models
         public string Indirizzo { get; set; }
 
         public decimal Totale { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DettagliOrdine> DettagliOrdine { get; set; }
 
         public virtual Utenti Utenti { get; set; }
 
