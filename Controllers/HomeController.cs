@@ -52,12 +52,12 @@ namespace back_end_s7.Controllers
                     };
                     dbContext.OrdiniArticoli.Add(dettaglio);
                     dbContext.SaveChanges();
+                    TempData["Message"] = "Articolo aggiunto al carrello con successo.";
 
                     // Aggiorna il totale dell'ordine
                     ordine.Totale += prezzoTotale;
                     dbContext.SaveChanges();
 
-                    TempData["Message"] = "Articolo aggiunto al carrello con successo.";
                     return RedirectToAction("Index", "Articoli");
                 }
             }
@@ -84,5 +84,32 @@ namespace back_end_s7.Controllers
 
             return RedirectToAction("Index", "Articoli");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ModificaOrdine(string indirizzo, string note)
+        {
+            string username = User.Identity.Name;
+            Utenti utente = dbContext.Utenti.FirstOrDefault(u => u.Username == username);
+            if (utente != null)
+            {
+                Ordini ordine = dbContext.Ordini.FirstOrDefault(o => o.IDUtente == utente.ID && o.Stato == "In corso");
+                if (ordine != null)
+                {
+                    // Aggiorna l'indirizzo di consegna e le note dell'ordine
+                    ordine.Indirizzo = indirizzo;
+                    ordine.Note = note;
+
+                    dbContext.SaveChanges();
+
+                    TempData["Message"] = "Modifiche all'ordine salvate con successo.";
+                    return RedirectToAction("RiepilogoOrdine");
+                }
+            }
+
+            TempData["ErrorMessage"] = "Si è verificato un errore durante il salvataggio delle modifiche all'ordine.";
+            return RedirectToAction("RiepilogoOrdine");
+        }
+
     }
 }

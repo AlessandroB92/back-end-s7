@@ -11,10 +11,17 @@
 }
 
 <h1 class="mb-5 text-center fw-bold">Articoli</h1>
-@if (TempData["Messaggio"] != null)
+@if (TempData["Message"] != null)
 {
     <div class="alert alert-success" role="alert">
-        @TempData["Messaggio"]
+        @TempData["Message"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
     </div>
 }
 @if (authCookie != null)
