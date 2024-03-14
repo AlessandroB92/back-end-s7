@@ -31,7 +31,7 @@ namespace back_end_s7.Controllers
                     {
                         IDUtente = utente.ID,
                         DataOrdine = DateTime.Now,
-                        Stato = "In Carrello",
+                        Stato = "In corso",
                         Indirizzo = "Indirizzo di default", // Puoi sostituire con l'indirizzo dell'utente
                         Totale = 0 // Inizialmente impostato a 0, verrà calcolato più avanti
                     };
@@ -84,6 +84,5 @@ namespace back_end_s7.Controllers
 
             return RedirectToAction("Index", "Articoli");
         }
-
     }
 }
