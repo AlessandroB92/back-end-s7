@@ -36,7 +36,7 @@ namespace back_end_s7.Controllers
 
             return View(articolo);
         }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int id)
         {
             var articolo = dbContext.Articoli.Find(id);
@@ -57,7 +57,7 @@ namespace back_end_s7.Controllers
 
             return View(articolo);
         }
-
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int id)
         {
             var articolo = dbContext.Articoli.Find(id);

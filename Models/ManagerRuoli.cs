@@ -13,8 +13,30 @@ namespace back_end_s7.Models
 
         public override void AddUsersToRoles(string[] usernames, string[] roleNames)
         {
-            throw new NotImplementedException();
+            foreach (var username in usernames)
+            {
+                foreach (var roleName in roleNames)
+                {
+                    if (!IsUserInRole(username, roleName))
+                    {
+                        var user = db.Utenti.FirstOrDefault(u => u.Username == username);
+                        var admin = db.Amministratori.FirstOrDefault(a => a.Username == username);
+
+                        if (user != null)
+                        {
+                            user.Ruolo = roleName;
+                            db.SaveChanges(); 
+                        }
+                        else if (admin != null)
+                        {
+                            admin.Ruolo = roleName;
+                            db.SaveChanges(); 
+                        }
+                    }
+                }
+            }
         }
+
 
         public override void CreateRole(string roleName)
         {

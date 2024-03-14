@@ -39,8 +39,25 @@
                         @Html.ActionLink("Elimina", "Delete", new { id = item.ID }, new { @class = "btn btn-danger" })
                     </div>
                 }
+                else if (authCookie != null && roles.Contains("User"))
+                {
+                    <div class="card-footer">
+                        @using (Html.BeginForm("AggiungiAlCarrello", "Home", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="idArticolo" value="@item.ID" />
+                            <button type="submit" class="btn btn-outline-success mx-2">Aggiungi al carrello</button>
+                            <select name="quantita">
+                                @for (int i = 1; i <= 10; i++)
+                                {
+                                    <option value="@i">@i</option>
+                                }
+                            </select>
+                        }
+
+                    </div>
+                }
             </div>
         </div>
-
     }
 </div>
