@@ -43,7 +43,7 @@
                 <div class="card-body">
                     <h5 class="card-title">@item.Nome</h5>
                     <p class="card-text">@item.Descrizione</p>
-                    <p class="card-text fw-bold">Prezzo: @item.Prezzo</p>
+                    <p class="card-text fw-bold">Prezzo: @item.Prezzo &euro;</p>
                 </div>
                 @if (authCookie != null && roles.Contains("Admin"))
                 {
