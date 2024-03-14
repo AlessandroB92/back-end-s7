@@ -5,6 +5,12 @@
 }
 
 <h1 class="text-center text-white mb-5">Login</h1>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success text-center w-50 m-auto" role="alert">
+        @TempData["Message"]
+    </div>
+}
 @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
 {
     <div class="alert alert-danger text-center w-50 my-4 m-auto">@ViewBag.ErrorMessage</div>

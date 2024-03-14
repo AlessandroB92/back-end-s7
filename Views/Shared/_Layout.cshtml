@@ -22,16 +22,18 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("RiepilogoOrdine", "Home")">Riepilogo Ordine</a>
-                        </li>
-                    }
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link text-tertiary fs-5 me-5" }) </li>
                 </ul>
                 @if (authCookie != null)
                 {
                     <ul class="navbar-nav">
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("RiepilogoOrdine", "Home")">Riepilogo Ordine</a>
+                            </li>
+                        }
+                        <li class="text-white fs-5 mx-2">Benvenuto, <span class="fw-bold text-success fs-4">@User.Identity.Name</span>!</li>
                         <li>
                             <form action="@Url.Action("Index", "Articoli")" method="post">
                                 @Html.AntiForgeryToken();

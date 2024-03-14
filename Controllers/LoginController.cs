@@ -62,7 +62,7 @@ namespace back_end_s7.Controllers
         {
             FormsAuthentication.SignOut();
             TempData["Message"] = "Logout effettuato con successo.";
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Login");
         }
     }
 }

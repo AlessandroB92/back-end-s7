@@ -3,6 +3,12 @@
 @{
     ViewBag.Title = "Riepilogo Ordine";
 }
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Message"]
+    </div>
+}
 
 <h2>Riepilogo Ordine</h2>
 
@@ -55,6 +61,10 @@
                     }
                 </tbody>
             </table>
+            <form action="@Url.Action("EliminaOrdine", "Home")" method="post">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="btn btn-danger">Elimina Ordine</button>
+            </form>
         </div>
     </div>
 }
