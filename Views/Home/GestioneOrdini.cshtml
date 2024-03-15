@@ -44,7 +44,7 @@
                             @Html.AntiForgeryToken()
                             <input type="hidden" name="idOrdine" value="@ordine.ID" />
                             <select name="nuovoStato" class="form-control">
-                                <option value="@ordine.Stato">@ordine.Stato</option>
+                                <option value="Elaborazione">Elaborazione</option>
                                 <option value="Spedito">Spedito</option>
                                 <option value="EVASO">EVASO</option>
                                 <!-- Aggiungi altri stati se necessario -->
