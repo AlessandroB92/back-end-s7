@@ -109,6 +109,20 @@ namespace back_end_s7.Controllers
             TempData["ErrorMessage"] = "Si è verificato un errore durante il salvataggio delle modifiche all'ordine.";
             return RedirectToAction("RiepilogoOrdine");
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult InviaOrdine()
+        {
+            // Puoi implementare qui la logica per l'invio dell'ordine
+
+            // Aggiungi un messaggio di conferma per l'utente
+            TempData["Message"] = "Ordine inviato con successo.";
+
+            // Reindirizza all'azione RiepilogoOrdine per visualizzare nuovamente l'ordine
+            return RedirectToAction("RiepilogoOrdine");
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EliminaOrdine()

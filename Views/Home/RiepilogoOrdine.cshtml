@@ -61,10 +61,16 @@
                     }
                 </tbody>
             </table>
-            <form action="@Url.Action("EliminaOrdine", "Home")" method="post">
-                @Html.AntiForgeryToken()
-                <button type="submit" class="btn btn-danger">Elimina Ordine</button>
-            </form>
+            <div class="d-flex justify-content-between">
+                <form method="post" action="@Url.Action("InviaOrdine", "Home")">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-primary">Invia Ordine</button>
+                </form>
+                <form action="@Url.Action("EliminaOrdine", "Home")" method="post">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-danger">Elimina Ordine</button>
+                </form>
+            </div>
         </div>
     </div>
 }

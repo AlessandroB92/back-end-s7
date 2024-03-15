@@ -44,7 +44,7 @@
                                 <a class="nav-link" href="@Url.Action("Incassi", "Home")">Incassi</a>
                             </li>
                         }
-                        <li class="text-white fs-5 mx-2">Benvenuto, <span class="fw-bold text-success fs-4">@User.Identity.Name</span>!</li>
+                        <li class="text-white fs-5 mx-2">Benvenuto/a, <span class="fw-bold text-success fs-4">@User.Identity.Name</span>!</li>
                         <li>
                             <form action="@Url.Action("Index", "Articoli")" method="post">
                                 @Html.AntiForgeryToken();
