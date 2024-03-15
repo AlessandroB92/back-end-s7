@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
 using back_end_s7.Models;
@@ -165,5 +166,29 @@ namespace back_end_s7.Controllers
 
             return RedirectToAction("GestioneOrdini");
         }
+
+        [Authorize(Roles = "Admin")]
+        public ActionResult Incassi(DateTime? data)
+        {
+            if (data == null)
+            {
+                // Se la data non è stata specificata, utilizza la data odierna
+                data = DateTime.Today;
+            }
+
+            // Calcola il numero di ordini evasi e il totale dell'incasso per la data specificata
+            int countOrdiniEvasi = dbContext.Ordini.Where(o => DbFunctions.TruncateTime(o.DataOrdine) == data && o.Stato == "EVASO").Count();
+            decimal? totaleIncassoGiornata = dbContext.Ordini.Where(o => DbFunctions.TruncateTime(o.DataOrdine) == data && o.Stato == "EVASO").Sum(o => (decimal?)o.Totale);
+
+            // Imposta i valori nella ViewBag per renderli disponibili nella vista
+            ViewBag.CountOrdiniEvasi = countOrdiniEvasi;
+            ViewBag.TotaleIncassoGiornata = totaleIncassoGiornata;
+
+            // Imposta la data selezionata nella ViewBag per mantenerla nell'input nella vista
+            ViewBag.DataSelezionata = data.Value.ToString("yyyy-MM-dd");
+
+            return View();
+        }
+
     }
 }
