@@ -38,7 +38,7 @@
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link" href="@Url.Action("GestioneOrdini", "Home")"><ion-icon name="cart-outline" class="fs-3"></ion-icon></a>
+                                <a class="nav-link" href="@Url.Action("GestioneOrdini", "Home")"><ion-icon name="file-tray-full-outline" class="fs-3"></ion-icon></a>
                             </li>
                         }
                         <li class="text-white fs-5 mx-2">Benvenuto, <span class="fw-bold text-success fs-4">@User.Identity.Name</span>!</li>

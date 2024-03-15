@@ -29,7 +29,7 @@
                     <td>@ordine.DataOrdine</td>
                     <td>@ordine.Indirizzo</td>
                     <td>
-                        <ul>
+                        <ul class="ps-3">
                             @foreach (var dettaglio in ordine.OrdiniArticoli)
                             {
                                 <li>@dettaglio.Articoli.Nome - Quantità: @dettaglio.Quantita</li>
