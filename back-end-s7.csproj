@@ -358,6 +358,7 @@
     <Content Include="Views\Articoli\Edit.cshtml" />
     <Content Include="Views\Articoli\Delete.cshtml" />
     <Content Include="Views\Home\RiepilogoOrdine.cshtml" />
+    <Content Include="Views\Home\GestioneOrdini.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

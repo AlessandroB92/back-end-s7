@@ -139,6 +139,31 @@ namespace back_end_s7.Controllers
             return RedirectToAction("RiepilogoOrdine", "Home");
         }
 
+        [Authorize(Roles = "Admin")]
+        public ActionResult GestioneOrdini()
+        {
+            var ordini = dbContext.Ordini.Include("Utenti").Include("OrdiniArticoli.Articoli").ToList();
+            return View(ordini);
+        }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public ActionResult ModificaStatoOrdine(int idOrdine, string nuovoStato)
+        {
+            var ordine = dbContext.Ordini.Find(idOrdine);
+            if (ordine != null)
+            {
+                ordine.Stato = nuovoStato;
+                dbContext.SaveChanges();
+                TempData["Message"] = "Stato dell'ordine modificato con successo.";
+            }
+            else
+            {
+                TempData["ErrorMessage"] = "Ordine non trovato.";
+            }
+
+            return RedirectToAction("GestioneOrdini");
+        }
     }
 }

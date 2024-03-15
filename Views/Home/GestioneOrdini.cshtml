@@ -1,0 +1,59 @@
+﻿@model IEnumerable<back_end_s7.Models.Ordini>
+
+@{
+    ViewBag.Title = "Gestione Ordini";
+}
+<h2 class="mb-5 text-center">Gestione Ordini</h2>
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID Ordine</th>
+                <th>Nome Cliente</th>
+                <th>Data Ordine</th>
+                <th>Indirizzo di consegna</th>
+                <th>Articoli</th>
+                <th>Totale</th>
+                <th>Note</th>
+                <th>Stato Attuale</th>
+                <th>Modifica Stato</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ordine in Model)
+            {
+                <tr>
+                    <td>@ordine.ID</td>
+                    <td>@ordine.Utenti.Nome</td> <!-- Accesso al nome dell'utente -->
+                    <td>@ordine.DataOrdine</td>
+                    <td>@ordine.Indirizzo</td>
+                    <td>
+                        <ul>
+                            @foreach (var dettaglio in ordine.OrdiniArticoli)
+                            {
+                                <li>@dettaglio.Articoli.Nome - Quantità: @dettaglio.Quantita</li>
+                            }
+                        </ul>
+                    </td>
+                    <td>@ordine.Totale</td>
+                    <td>@ordine.Note</td>
+                    <td>@ordine.Stato</td>
+                    <td>
+                        <form action="@Url.Action("ModificaStatoOrdine", "Home")" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="idOrdine" value="@ordine.ID" />
+                            <select name="nuovoStato" class="form-control">
+                                <option value="@ordine.Stato">@ordine.Stato</option>
+                                <option value="Spedito">Spedito</option>
+                                <option value="EVASO">EVASO</option>
+                                <!-- Aggiungi altri stati se necessario -->
+                            </select>
+                            <button type="submit" class="btn btn-primary my-2">Modifica</button>
+                        </form>
+                    </td>
+                    <!-- Altre colonne dell'ordine -->
+                </tr>
+            }
+        </tbody>
+    </table>
