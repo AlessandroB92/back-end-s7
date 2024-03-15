@@ -21,7 +21,8 @@ namespace back_end_s7
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/StyleSheet.css"));
         }
     }
 }
